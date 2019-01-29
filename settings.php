@@ -1,3 +1,8 @@
+<?php
+if (isset($_SESSION['formSent'])) {
+    die();
+} else {
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,3 +25,4 @@
     </form>
 </body>
 </html>
+<?php } ?>
