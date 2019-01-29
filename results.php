@@ -1,4 +1,7 @@
 <?php
+    if ((isset($_POST["apor"])) || (isset($_POST["giraffer"])) || (isset($_POST["tigrar"])) || (isset($_POST["kokosnötter"]))) {
+        $_SESSION['formSent'] = true;
+    }
     if (isset($_SESSION['formSent'])) {
         abstract class Animal {
             abstract protected function makeSound();
@@ -31,7 +34,13 @@
                 return 'En ' .$this->name . ' säger ' . $this->sound;
             }   
         }
-
+        class natureReserve {
+            function resetReserve() {
+                unset($_SESSION['formSent']);
+                header('Location: index.php');
+                exit();
+            }
+        }
         $numApor = $_POST["apor"];
         $numGiraffer = $_POST["giraffer"];
         $numTigrar = $_POST["tigrar"];
@@ -40,6 +49,10 @@
         $apa = new Apa();
         $tiger = new Tiger();
         $kokosNöt = new Kokosnöt();
+        $reserve = new natureReserve();
+        if (isset($_GET['reset'])) {
+            $reserve->resetReserve();
+        }
         
         $toAdd = "";
         for($i=0; $i < $numApor; $i++) {
@@ -72,5 +85,6 @@
     <div id="djurbilder">
         <?php echo $toAdd; ?>
     </div>
+    <a href="results.php?reset=true">Reset</a>
 </body>
 </html>
